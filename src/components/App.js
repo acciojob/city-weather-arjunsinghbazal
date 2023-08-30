@@ -2,7 +2,7 @@
 
 import './../styles/App.css';
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 
 let API_KEY = 'cbf6566e445cd4fdf49a39c8bbc0376c';
 const Weather = () => {
@@ -10,14 +10,27 @@ const Weather = () => {
     const [weather, setWeather] = useState(null);
   
     const search = async (e) => {
-      if (e.key === "Enter") {
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}`
-        );
-        setWeather(response.data);
+  if (e.key === "Enter") {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}`
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        setWeather(data);
         setQuery("");
+      } else {
+        console.log('Request failed:', response.status);
+        // Handle error here, maybe set an error state
       }
-    };
+    } catch (error) {
+      console.error('Fetch error:', error);
+      // Handle error here, maybe set an error state
+    }
+  }
+};
+
   
     const kelvinToFahrenheit = (k) => ((k - 273.15) * 9) / 5 + 32;
   
