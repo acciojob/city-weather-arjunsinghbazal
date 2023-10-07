@@ -2,14 +2,12 @@
 
 import './../styles/App.css';
 import React, { useEffect, useState } from "react";
-
-
 let API_KEY = 'cbf6566e445cd4fdf49a39c8bbc0376c';
 const Weather = () => {
     const [query, setQuery] = useState("");
     const [weather, setWeather] = useState(null);
   
-    const search = async (e) => {
+      const search = async (e) => {
   if (e.key === "Enter") {
     try {
       const response = await fetch(
@@ -30,7 +28,6 @@ const Weather = () => {
     }
   }
 };
-
   
     const kelvinToFahrenheit = (k) => ((k - 273.15) * 9) / 5 + 32;
   
